@@ -1,0 +1,39 @@
+//
+//  CurrentWeather.swift
+//  SwiftUIWeatherWithTCA
+//
+//  Created by 이보라 on 8/7/24.
+//
+
+import Foundation
+
+struct CurrentWeather: Codable, Hashable {
+    /// 지역
+    let name: String?
+    /// 날씨상태
+    let description: String?
+    /// 현재기온
+    let temp: String?
+    /// 최저기온
+    let tempMin: String?
+    /// 최고기온
+    let tempMax: String?
+    /// 아이콘 이미지
+    let imageString: String?
+    
+}
+
+extension CurrentWeather: EntityResponseProtocol {
+    static func null() -> Self {
+        return .init(name: nil, description: nil, temp: nil, tempMin: nil, tempMax: nil, imageString: nil)
+    }
+    
+    static func empty() -> CurrentWeather {
+        return .init(name: "", description: "", temp: "", tempMin: "", tempMax: "", imageString: "")
+    }
+    
+    static func mock() -> CurrentWeather {
+        return .init(name: "Seoul", description: "맑음", temp: "26.74", tempMin: "26.66", tempMax: "26.76", imageString: "01")
+    }
+    
+}
