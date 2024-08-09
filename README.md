@@ -13,7 +13,8 @@
 
 | 메인화면 | 검색화면 |
 | --- | --- |
-| !\[IMG\_3173\](https://github.com/user-attachments/assets/af6e5164-93d2-4194-b8b1-eaceac16b13e) !\[IMG\_3172\](https://github.com/user-attachments/assets/01407908-2e7e-4011-aef0-9575cf885dc8) | !\[IMG\_3175\](https://github.com/user-attachments/assets/4539c975-b52a-454b-aab4-f7642b543709) |
+| ![IMG_3172](https://github.com/user-attachments/assets/01407908-2e7e-4011-aef0-9575cf885dc8) | ![IMG_3175](https://github.com/user-attachments/assets/4539c975-b52a-454b-aab4-f7642b543709) |
+| ![IMG_3173](https://github.com/user-attachments/assets/af6e5164-93d2-4194-b8b1-eaceac16b13e) |  |
 
 #### MainView 구성
 
