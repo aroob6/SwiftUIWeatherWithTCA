@@ -7,8 +7,6 @@
 
 import Foundation
 import ComposableArchitecture
-import SwiftUI
-
 
 @Reducer
 struct MainFeature {
@@ -32,6 +30,7 @@ struct MainFeature {
         var fiveDaysInfo: [FiveDaysInfo] = []
         /// MapView lat, lon
         var mapViewInfo: MapInfo = .mock()
+        
         ///추가정보 ex. 습도, 구름, 바람속도
         var additionalInfo: AdditionalInfo = .mock()
     }

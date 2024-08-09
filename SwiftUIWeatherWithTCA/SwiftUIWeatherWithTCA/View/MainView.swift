@@ -15,7 +15,7 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack {
-            WeatherView(store: store)
+            weatherView
                 .searchable(
                     text: $store.searchText.sending(\.searching),
                     placement: .navigationBarDrawer,
@@ -23,12 +23,8 @@ struct MainView: View {
                 )
         }
     }
-}
-
-struct WeatherView: View {
-    var store: StoreOf<MainFeature>
-    
-    var body: some View {
+    @ViewBuilder
+    private var weatherView: some View {
         ScrollView {
             if store.isSearching {
                 SearchView(store: store)
@@ -73,7 +69,6 @@ struct WeatherView: View {
             ))
         }
     }
-    
     // MARK: - 현재날씨정보
     @ViewBuilder
     private var currentWeatherView: some View {
@@ -160,17 +155,18 @@ struct WeatherView: View {
     @ViewBuilder
     private var mapView: some View {
         VStack(alignment: .leading) {
+            let region = CLLocationCoordinate2D(
+                latitude: store.mapViewInfo.lat ?? 0.0,
+                longitude: store.mapViewInfo.lon ?? 0.0
+            )
             Text("MapView")
                 .foregroundStyle(.white)
             
             Map(initialPosition: .region(
-                .init(center: CLLocationCoordinate2D(
-                    latitude: store.mapViewInfo.lat ?? 0.0,
-                    longitude: store.mapViewInfo.lon ?? 0.0
-                ),
+                .init(center: region,
                       span: .init(latitudeDelta: 0.005, longitudeDelta: 0.005)
                 ))) {
-                    Marker(store.mapViewInfo.name ?? "", coordinate: .Asan)
+                    Marker(store.mapViewInfo.name ?? "", coordinate: region)
                 }
         }
         .padding()
