@@ -3,8 +3,9 @@
 
 ### 정보
 
-| Language | Swift |
+| 정보 | 해당기술 |
 | --- | --- |
+| Language | Swift |
 | UI Framework | SwiftUI |
 | Design Pattern | TCA |
 | 비동기 | Combine |
