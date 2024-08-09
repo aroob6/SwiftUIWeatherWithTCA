@@ -12,7 +12,7 @@
 ### 구현 화면
 
 | 메인화면 | 메인화면 | 검색화면 |
-| --- | --- | --- |
+| -------- | -------- | -------- |
 | <img width = "50%" src = "https://github.com/user-attachments/assets/01407908-2e7e-4011-aef0-9575cf885dc8"> |<img width = "50%" src = "https://github.com/user-attachments/assets/af6e5164-93d2-4194-b8b1-eaceac16b13e">| <img width = "50%" src = "https://github.com/user-attachments/assets/4539c975-b52a-454b-aab4-f7642b543709">
 
 #### MainView 구성
