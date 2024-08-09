@@ -3,7 +3,7 @@
 
 ### 정보
 
-| 정보 | 해당기술 |
+| 정보 | 기술 |
 | --- | --- |
 | Language | Swift |
 | UI Framework | SwiftUI |
