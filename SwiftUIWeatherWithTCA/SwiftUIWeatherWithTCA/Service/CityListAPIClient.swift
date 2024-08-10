@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import NetworkKit
 
 struct CityListAPIClient {
     var fetchCityList: () async throws -> Result<[CityListAPI.Response], APIError>

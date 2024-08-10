@@ -9,6 +9,7 @@
 import SwiftUI
 import ComposableArchitecture
 import MapKit
+import SupportKit
 
 struct MainView: View {
     @Bindable var store: StoreOf<MainFeature>
@@ -53,7 +54,7 @@ struct MainView: View {
                 WeatherAPI.Request(
                     lat: "36.783611",
                     lon: "127.004173",
-                    appid: API_KEY.api_key,
+                    appid: nil,
                     units: nil,
                     mode: nil ,
                     lang: nil
@@ -65,7 +66,7 @@ struct MainView: View {
                 ForecastAPI.Request(
                     lat: "36.783611",
                     lon: "127.004173",
-                    appid: API_KEY.api_key,
+                    appid: nil,
                     units: nil,
                     mode: nil,
                     cnt: nil,

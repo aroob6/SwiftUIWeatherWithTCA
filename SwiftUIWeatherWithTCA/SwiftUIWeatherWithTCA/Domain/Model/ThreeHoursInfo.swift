@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SupportKit
 
 struct ThreeHoursInfo: Codable, Hashable, Identifiable {
     var id = UUID()

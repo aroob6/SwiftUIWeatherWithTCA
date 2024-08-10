@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import SupportKit
 
 struct CityListAPI: Codable {
-    static let path = Bundle.main.path(forResource: "citylist", ofType: "json")
+    
+    static let path = Bundle.supportModule.path(forResource: "citylist", ofType: "json")
+//    static let path = Bundle.main.path(forResource: "citylist", ofType: "json")
+    
     
     struct Response: Codable, Hashable {
         let id: Int?

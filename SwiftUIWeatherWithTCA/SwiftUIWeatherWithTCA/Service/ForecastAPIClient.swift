@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import Combine
+import NetworkKit
 
 struct ForecastAPIClient {
     var fetchForecast: (ForecastAPI.Request) async throws -> Result<ForecastAPI.Response, APIError>
@@ -25,7 +26,7 @@ extension ForecastAPIClient: DependencyKey {
             let parameter: [String : String] = [
                 "lat" : request.lat,
                 "lon" : request.lon,
-                "appid" : request.appid,
+                "appid" : request.appid ?? API_KEY.api_key,
                 "lang" : request.lang ?? "",
                 "units": request.units ?? "metric",
                 "cnt": request.cnt ?? "",

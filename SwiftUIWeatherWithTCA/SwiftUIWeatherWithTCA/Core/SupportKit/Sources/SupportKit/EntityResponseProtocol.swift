@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EntityResponseProtocol: Codable, Hashable {
+public protocol EntityResponseProtocol: Codable, Hashable {
     static func null() -> Self
     static func empty() -> Self
     static func mock() -> Self

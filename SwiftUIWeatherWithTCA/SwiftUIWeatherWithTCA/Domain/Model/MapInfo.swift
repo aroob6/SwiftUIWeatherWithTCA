@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SupportKit
 
 struct MapInfo {
     ///이름

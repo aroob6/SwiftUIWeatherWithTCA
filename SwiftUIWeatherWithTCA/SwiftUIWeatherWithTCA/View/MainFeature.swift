@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import NetworkKit
 
 @Reducer
 struct MainFeature {

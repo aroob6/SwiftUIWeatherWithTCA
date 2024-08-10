@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SupportKit
 
 struct SearchListInfo: Codable, Hashable {
     ///이름

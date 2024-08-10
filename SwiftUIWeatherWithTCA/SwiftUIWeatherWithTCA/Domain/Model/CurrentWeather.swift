@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SupportKit
 
 struct CurrentWeather: Codable, Hashable {
     /// 지역

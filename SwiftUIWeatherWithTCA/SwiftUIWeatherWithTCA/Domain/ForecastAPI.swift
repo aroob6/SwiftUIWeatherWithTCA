@@ -13,7 +13,7 @@ struct ForecastAPI: Codable {
     struct Request: Codable {
         let lat: String
         let lon: String
-        let appid: String
+        let appid: String?
         let units: String?
         let mode: String?
         let cnt: String?

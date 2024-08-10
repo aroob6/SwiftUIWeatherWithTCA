@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SupportKit
 
 struct AdditionalInfo: Codable, Hashable {
     ///습도

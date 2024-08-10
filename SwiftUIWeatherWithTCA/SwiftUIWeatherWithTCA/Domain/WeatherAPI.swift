@@ -14,7 +14,7 @@ struct WeatherAPI: Codable {
     struct Request: Codable {
         let lat: String
         let lon: String
-        let appid: String
+        let appid: String?
         let units: String?
         let mode: String?
         let lang: String?
@@ -108,55 +108,4 @@ struct Wind: Codable, Hashable {
     static func empty() -> Self {
         return Wind(speed: nil, deg: nil, gust: nil)
     }
-}
-
-
-// MARK: - WeatherAPI.Response: EntityResponseProtocol
-extension WeatherAPI.Response: EntityResponseProtocol {
-    static func == (lhs: WeatherAPI.Response, rhs: WeatherAPI.Response) -> Bool {
-        return lhs == rhs
-    }
-    
-    static func null() -> Self {
-        return .init(coord: nil, weather: nil, base: nil, main: nil, visibility: nil, wind: nil, rain: nil, clouds: nil, dt: nil, sys: nil, timezone: nil, id: nil, name: nil, cod: nil)
-    }
-    
-    static func empty() -> Self {
-        return .init(
-            coord: Coord.empty(),
-            weather: [],
-            base: nil,
-            main: Main.empty(),
-            visibility: nil,
-            wind: Wind.empty(),
-            rain: Rain.empty(),
-            clouds: Clouds.empty(),
-            dt: nil,
-            sys: Sys.empty(),
-            timezone: nil,
-            id: nil,
-            name: nil,
-            cod: nil
-        )
-    }
-    
-    static func mock() -> Self {
-        return .init(
-            coord: Coord(lon: 10.99, lat: 44.34),
-            weather: [Weather(id: 501, main: "Rain", description: "moderate rain", icon: "10d")],
-            base: "stations",
-            main: Main(temp: 298.48, feels_like: 298.74, temp_min: 297.56, temp_max: 300.05, pressure: 1015, humidity: 64, sea_level: 1015, grnd_level: 933),
-            visibility: 10000,
-            wind: Wind(speed: 0.62, deg: 349, gust: 1.18),
-            rain: Rain(the1H: 3.16),
-            clouds: Clouds(all: 100),
-            dt: 1661870592,
-            sys: Sys(type: 2, id: 2075663, country: "IT", sunrise: 1661834187, sunset: 1661882248),
-            timezone: 7200,
-            id: 3163858,
-            name: "Zocca",
-            cod: 200
-        )
-    }
-    
 }
