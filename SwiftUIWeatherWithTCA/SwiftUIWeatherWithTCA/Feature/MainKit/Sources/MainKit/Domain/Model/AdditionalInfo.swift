@@ -8,7 +8,7 @@
 import Foundation
 import SupportKit
 
-struct AdditionalInfo: Codable, Hashable {
+public struct AdditionalInfo: Codable, Hashable {
     ///습도
     let humidity: String?
     ///구름
@@ -19,15 +19,15 @@ struct AdditionalInfo: Codable, Hashable {
 }
 
 extension AdditionalInfo: EntityResponseProtocol {
-    static func null() -> Self {
+    public static func null() -> Self {
         return .init(humidity: nil, clouds: nil, wind_speed: nil)
     }
     
-    static func empty() -> Self {
+    public static func empty() -> Self {
         return .init(humidity: "", clouds: "", wind_speed: "")
     }
     
-    static func mock() -> Self {
+    public static func mock() -> Self {
         return .init(humidity: "56", clouds: "50", wind_speed: "1.97")
     }
     

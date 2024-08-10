@@ -8,8 +8,8 @@
 import Foundation
 import SupportKit
 
-struct ThreeHoursInfo: Codable, Hashable, Identifiable {
-    var id = UUID()
+public struct ThreeHoursInfo: Codable, Hashable, Identifiable {
+    public var id = UUID()
     ///시간
     let hours: String?
     ///아이콘
@@ -20,15 +20,15 @@ struct ThreeHoursInfo: Codable, Hashable, Identifiable {
 }
 
 extension ThreeHoursInfo: EntityResponseProtocol {
-    static func null() -> Self {
+    public static func null() -> Self {
         return .init(hours: nil, icon: nil, temp: nil)
     }
     
-    static func empty() -> Self {
+    public static func empty() -> Self {
         return .init(hours: "", icon: .none, temp: "")
     }
     
-    static func mock() -> Self {
+    public static func mock() -> Self {
         return .init(hours: "1", icon: "01", temp: "10")
     }
     

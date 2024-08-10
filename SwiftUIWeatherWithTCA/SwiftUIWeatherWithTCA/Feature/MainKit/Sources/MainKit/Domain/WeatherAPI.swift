@@ -8,10 +8,10 @@
 import Foundation
 
 // MARK: - WeatherAPI
-struct WeatherAPI: Codable {
+public struct WeatherAPI: Codable {
     static let path = "/weather"
     
-    struct Request: Codable {
+    public struct Request: Codable {
         let lat: String
         let lon: String
         let appid: String?
@@ -20,7 +20,7 @@ struct WeatherAPI: Codable {
         let lang: String?
     }
     
-    struct Response: Codable, Hashable {
+    public struct Response: Codable, Hashable {
         let coord: Coord?
         let weather: [Weather]?
         let base: String?

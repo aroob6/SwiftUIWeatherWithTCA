@@ -10,36 +10,43 @@ import ComposableArchitecture
 import NetworkKit
 
 @Reducer
-struct MainFeature {
-    
-    @ObservableState
-    struct State {
-        var isLoading: Bool = false
-        var errorMessage: String?
+public struct MainFeature {
+    public init() {
         
-        ///검색
-        var searchText = ""
-        ///전체 cityList
-        var cityList: [CityListAPI.Response] = []
-        ///filter cityList
-        var filterCityList: [CityListAPI.Response] = [.init(id: 1, name: "mock", country: "mmock", coord: .init(lon: 0.0, lat: 0.0))]
-        ///보여줄 cityList
-        var showCityList: [CityListAPI.Response] = []
-        
-        ///현재날씨
-        var currentWeather: CurrentWeather = .mock()
-        ///3시간별 날씨
-        var threeHoursInfo: [ThreeHoursInfo] = [.mock()]
-        ///5일간 날씨
-        var fiveDaysInfo: [FiveDaysInfo] = []
-        /// MapView lat, lon
-        var mapViewInfo: MapInfo = .mock()
-        
-        ///추가정보 ex. 습도, 구름, 바람속도
-        var additionalInfo: AdditionalInfo = .mock()
     }
     
-    enum Action {
+    @ObservableState
+    public struct State {
+        public var isLoading: Bool = false
+        public var errorMessage: String?
+        
+        ///검색
+        public var searchText = ""
+        ///전체 cityList
+        public var cityList: [CityListAPI.Response] = []
+        ///filter cityList
+        public var filterCityList: [CityListAPI.Response] = [.init(id: 1, name: "mock", country: "mmock", coord: .init(lon: 0.0, lat: 0.0))]
+        ///보여줄 cityList
+        public var showCityList: [CityListAPI.Response] = []
+        
+        ///현재날씨
+        public var currentWeather: CurrentWeather = .mock()
+        ///3시간별 날씨
+        public var threeHoursInfo: [ThreeHoursInfo] = [.mock()]
+        ///5일간 날씨
+        public var fiveDaysInfo: [FiveDaysInfo] = []
+        /// MapView lat, lon
+        public var mapViewInfo: MapInfo = .mock()
+        
+        ///추가정보 ex. 습도, 구름, 바람속도
+        public var additionalInfo: AdditionalInfo = .mock()
+        
+        public init() {
+            
+        }
+    }
+    
+    public enum Action {
         /// 검색
         case searching(String)
         
@@ -74,7 +81,7 @@ struct MainFeature {
     @Dependency(\.foreCastAppEnvironment) var foreCastAppEnvironment
     @Dependency(\.cityListAppEnvironment) var cityListAppEnvironment
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .searching(let searchText):

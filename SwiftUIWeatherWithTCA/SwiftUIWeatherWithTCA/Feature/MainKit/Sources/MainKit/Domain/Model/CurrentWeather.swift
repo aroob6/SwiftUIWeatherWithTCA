@@ -8,7 +8,7 @@
 import Foundation
 import SupportKit
 
-struct CurrentWeather: Codable, Hashable {
+public struct CurrentWeather: Codable, Hashable {
     /// 지역
     let name: String?
     /// 날씨상태
@@ -25,15 +25,15 @@ struct CurrentWeather: Codable, Hashable {
 }
 
 extension CurrentWeather: EntityResponseProtocol {
-    static func null() -> Self {
+    public static func null() -> Self {
         return .init(name: nil, description: nil, temp: nil, tempMin: nil, tempMax: nil, imageString: nil)
     }
     
-    static func empty() -> CurrentWeather {
+    public static func empty() -> CurrentWeather {
         return .init(name: "", description: "", temp: "", tempMin: "", tempMax: "", imageString: "")
     }
     
-    static func mock() -> CurrentWeather {
+    public static func mock() -> CurrentWeather {
         return .init(name: "Seoul", description: "맑음", temp: "26.74", tempMin: "26.66", tempMax: "26.76", imageString: "01")
     }
     

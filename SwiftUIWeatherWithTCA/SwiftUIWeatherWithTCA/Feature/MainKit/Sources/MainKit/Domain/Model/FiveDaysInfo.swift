@@ -8,8 +8,8 @@
 import Foundation
 import SupportKit
 
-struct FiveDaysInfo: Codable, Hashable, Identifiable {
-    var id = UUID()
+public struct FiveDaysInfo: Codable, Hashable, Identifiable {
+    public var id = UUID()
     ///요일
     let day: String?
     ///아이콘
@@ -21,15 +21,15 @@ struct FiveDaysInfo: Codable, Hashable, Identifiable {
 }
 
 extension FiveDaysInfo: EntityResponseProtocol {
-    static func null() -> Self {
+    public static func null() -> Self {
         return .init(day: nil, icon: nil, tempMax: nil, tempMin: nil)
     }
     
-    static func empty() -> FiveDaysInfo {
+    public static func empty() -> FiveDaysInfo {
         return .init(day: "", icon: "", tempMax: "", tempMin: "")
     }
     
-    static func mock() -> FiveDaysInfo {
+    public static func mock() -> FiveDaysInfo {
         return .init(day: "월", icon: "01", tempMax: "10", tempMin: "11")
     }
     

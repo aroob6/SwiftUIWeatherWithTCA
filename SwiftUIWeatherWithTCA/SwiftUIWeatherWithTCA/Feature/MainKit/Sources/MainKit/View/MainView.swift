@@ -11,10 +11,15 @@ import ComposableArchitecture
 import MapKit
 import SupportKit
 
-struct MainView: View {
+public struct MainView: View {
     @Bindable var store: StoreOf<MainFeature>
     
-    var body: some View {
+    public init(store: StoreOf<MainFeature>) {
+        self.store = store
+        
+    }
+    
+    public var body: some View {
         NavigationStack {
             weatherView
                 .searchable(

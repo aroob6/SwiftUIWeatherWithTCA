@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct ForecastAPI: Codable {
+public struct ForecastAPI: Codable {
     static let path = "/forecast"
     
-    struct Request: Codable {
+    public struct Request: Codable {
         let lat: String
         let lon: String
         let appid: String?
@@ -20,7 +20,7 @@ struct ForecastAPI: Codable {
         let lang: String?
     }
     
-    struct Response: Codable, Hashable {
+    public struct Response: Codable, Hashable {
         let cod: String?
         let message, cnt: Int?
         let list: [ForecastList]?

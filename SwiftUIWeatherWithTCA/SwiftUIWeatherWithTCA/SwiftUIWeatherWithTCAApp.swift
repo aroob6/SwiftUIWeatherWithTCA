@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MainKit
 import ComposableArchitecture
 
 @main

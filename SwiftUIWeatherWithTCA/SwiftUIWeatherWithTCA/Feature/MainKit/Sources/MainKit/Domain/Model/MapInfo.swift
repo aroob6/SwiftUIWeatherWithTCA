@@ -8,7 +8,7 @@
 import Foundation
 import SupportKit
 
-struct MapInfo {
+public struct MapInfo {
     ///이름
     let name: String?
     ///위치
@@ -17,15 +17,15 @@ struct MapInfo {
 }
 
 extension MapInfo: EntityResponseProtocol {
-    static func null() -> MapInfo {
+    public static func null() -> MapInfo {
         return .init(name: nil, lat: nil, lon: nil)
     }
     
-    static func empty() -> MapInfo {
+    public static func empty() -> MapInfo {
         return .init(name: "", lat: 0.0, lon: 0.0)
     }
     
-    static func mock() -> MapInfo {
+    public static func mock() -> MapInfo {
         return .init(name: "Asan", lat: 36.7836, lon: 127.0041)
     }
     
