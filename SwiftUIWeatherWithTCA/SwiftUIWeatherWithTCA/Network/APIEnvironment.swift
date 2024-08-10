@@ -6,7 +6,6 @@
 //
 
 import ComposableArchitecture
-import SwiftUI
 
 extension DependencyValues {
     var mainAppEnvironment: MainAPIClient {

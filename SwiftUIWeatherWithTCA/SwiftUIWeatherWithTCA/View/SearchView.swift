@@ -17,9 +17,9 @@ struct SearchView: View {
             VStack(alignment: .leading) {
                 Text(item.name ?? "")
                     .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text(item.country ?? "")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
             .onTapGesture {
                 dismissSearch()
                 store.send(.searchItemTap(item))
@@ -31,7 +31,6 @@ struct SearchView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         
     }
 }

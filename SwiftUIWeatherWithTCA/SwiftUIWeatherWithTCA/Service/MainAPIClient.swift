@@ -31,14 +31,12 @@ extension MainAPIClient: DependencyKey {
                 "mode": request.mode ?? "json"
             ]
             
-            let queryItems = parameter.map {
+            urlComponents.queryItems = parameter.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
             
-            urlComponents.queryItems = queryItems
-            
             guard let url = urlComponents.url else {
-                throw APIError.networkError
+                throw APIError.urlComponentsError
             }
             
             return try await withCheckedThrowingContinuation { continuation in

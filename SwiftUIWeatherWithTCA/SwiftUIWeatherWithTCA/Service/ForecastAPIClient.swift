@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Combine
 
 struct ForecastAPIClient {
     var fetchForecast: (ForecastAPI.Request) async throws -> Result<ForecastAPI.Response, APIError>
@@ -15,7 +16,8 @@ struct ForecastAPIClient {
 extension ForecastAPIClient: DependencyKey {
     static let liveValue = ForecastAPIClient(
         fetchForecast: { request in
-
+            var cancellables = Set<AnyCancellable>()
+            
             guard var urlComponents = URLComponents(string: BaseUrl.url + ForecastAPI.path) else {
                 throw APIError.urlComponentsError
             }
@@ -30,36 +32,43 @@ extension ForecastAPIClient: DependencyKey {
                 "mode": request.mode ?? "json"
             ]
             
-            let queryItems = parameter.map {
+            urlComponents.queryItems = parameter.map {
                 URLQueryItem(name: $0.key, value: $0.value)
             }
             
-            urlComponents.queryItems = queryItems
-            
             guard let url = urlComponents.url else {
-                throw APIError.networkError
+                throw APIError.urlComponentsError
             }
             
-            
             return try await withCheckedThrowingContinuation { continuation in
-                URLSession.shared.dataTask(with: url) { data, response, error in
-                    if let error = error {
-                        continuation.resume(returning: .failure(.etcError(error: error)))
-                        return
+                URLSession.shared.dataTaskPublisher(for: url)
+                    .tryMap { element -> Data in
+                        guard let response = element.response as? HTTPURLResponse,
+                              (200...299).contains(response.statusCode) else {
+                            throw URLError(.badServerResponse)
+                        }
+                        return element.data
                     }
-                    
-                    guard let data = data else {
-                        continuation.resume(returning: .failure(.dataError))
-                        return
+                    .decode(type: ForecastAPI.Response.self, decoder: JSONDecoder())
+                    .sink { completion in
+                        switch completion {
+                        case .finished:
+                            break
+                        case .failure(let error):
+                            let apiError: APIError
+                            if let urlError = error as? URLError {
+                                apiError = .etcError(error: urlError)
+                            } else if let decodingError = error as? DecodingError {
+                                apiError = .decodingError
+                            } else {
+                                apiError = .dataError
+                            }
+                            continuation.resume(returning: .failure(apiError))
+                        }
+                    } receiveValue: { response in
+                        continuation.resume(returning: .success(response))
                     }
-                    
-                    do {
-                        let foreCastResponse = try JSONDecoder().decode(ForecastAPI.Response.self, from: data)
-                        continuation.resume(returning: .success(foreCastResponse))
-                    } catch {
-                        continuation.resume(returning: .failure(.decodingError))
-                    }
-                }.resume()
+                    .store(in: &cancellables)
             }
         }
     )

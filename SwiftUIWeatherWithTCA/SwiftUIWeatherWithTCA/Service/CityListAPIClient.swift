@@ -14,23 +14,25 @@ struct CityListAPIClient {
 
 extension CityListAPIClient: DependencyKey {
     static let liveValue = CityListAPIClient {
-        guard let path = CityListAPI.path else { throw APIError.networkError }
-        
-        guard let jsonString = try? String(contentsOfFile: path) else {
-            throw APIError.networkError
-        }
-        
-        guard let data = jsonString.data(using: .utf8) else {
-                throw APIError.networkError
-            }
-        
         return try await withCheckedThrowingContinuation { continuation in
             do {
+                guard let path = CityListAPI.path else {
+                    return continuation.resume(returning: .failure(.urlComponentsError))
+                }
+                
+                guard let jsonString = try? String(contentsOfFile: path) else {
+                    return continuation.resume(returning: .failure(.dataError))
+                }
+                
+                guard let data = jsonString.data(using: .utf8) else {
+                    return continuation.resume(returning: .failure(.dataError))
+                }
+                
                 let info = try JSONDecoder().decode([CityListAPI.Response].self, from: data)
                 continuation.resume(returning: .success(info))
             }
-            catch {
-                
+            catch let error {
+                return continuation.resume(returning: .failure(.etcError(error: error)))
             }
         }
     }
