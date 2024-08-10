@@ -18,9 +18,12 @@ struct MainFeature {
         
         ///검색
         var searchText = ""
-        var isSearching = false
+        ///전체 cityList
         var cityList: [CityListAPI.Response] = []
-        var filterCityList: [CityListAPI.Response] = []
+        ///filter cityList
+        var filterCityList: [CityListAPI.Response] = [.init(id: 1, name: "mock", country: "mmock", coord: .init(lon: 0.0, lat: 0.0))]
+        ///보여줄 cityList
+        var showCityList: [CityListAPI.Response] = []
         
         ///현재날씨
         var currentWeather: CurrentWeather = .mock()
@@ -41,6 +44,10 @@ struct MainFeature {
         
         /// Search Tap
         case searchItemTap(CityListAPI.Response)
+        
+        
+        /// pagination
+        case loadMore(index: Int)
         
         /// CityList API 요청
         case fetchSearchList
@@ -69,6 +76,23 @@ struct MainFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .searching(let searchText):
+                state.searchText = searchText
+                
+                if searchText.isEmpty {
+                    state.showCityList = state.cityList.prefix(20).map{$0}
+                }
+                else {
+                    // 보여줄 20개 itme
+                    state.showCityList = state.cityList
+                        .filter { $0.name?.lowercased().hasPrefix(searchText.lowercased()) ?? false }.prefix(20).map{$0}
+                    
+                    // 전체 filter item
+                    state.filterCityList = state.cityList
+                        .filter { $0.name?.lowercased().hasPrefix(searchText.lowercased()) ?? false }
+                }
+                return .none
+                
             case .searchItemTap(let item):
                 let lat = String(item.coord?.lat ?? 0)
                 let lon = String(item.coord?.lon ?? 0)
@@ -76,10 +100,7 @@ struct MainFeature {
                 let weatherRequest = WeatherAPI.Request(lat: lat , lon: lon, appid: API_KEY.api_key, units: nil, mode: nil, lang: nil)
                 let foreCastRequest = ForecastAPI.Request(lat: lat, lon: lon, appid: API_KEY.api_key, units: nil, mode: nil, cnt: nil, lang: nil)
                 
-                
-                state.isSearching = false
                 state.searchText = ""
-                
                 state.mapViewInfo = .init(name: item.name, lat: item.coord?.lat, lon: item.coord?.lon)
                 
                 return .run { send in
@@ -89,17 +110,15 @@ struct MainFeature {
                     let foreCastResult = try await foreCastAppEnvironment.fetchForecast(foreCastRequest)
                     await send(.fetchForeCastResponse(foreCastResult))
                 }
-                
-            case .searching(let searchText):
-                if !searchText.isEmpty {
-                    state.isSearching = true
-                    
-                    state.filterCityList = state.cityList
-                        .filter { $0.name?.lowercased().hasPrefix(searchText.lowercased()) ?? false }
-                    
+            case .loadMore(let index):
+                if state.searchText.isEmpty {
+                    state.showCityList.append(contentsOf: state.cityList[index..<index+20])
                 }
                 else {
-                    state.isSearching = false
+                    if state.filterCityList.count > 20 {
+                        //검색 후
+                        state.showCityList.append(contentsOf: state.filterCityList[index..<index+20])
+                    }
                 }
                 
                 return .none
@@ -115,6 +134,7 @@ struct MainFeature {
                 
             case let .fetchSearchListResponse(.success(info)):
                 print("DEBUG: API 결과 > response = \(info.count)")
+                state.isLoading = false
                 state.cityList = info
                 return .none
                 

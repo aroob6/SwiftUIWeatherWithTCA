@@ -21,13 +21,19 @@ struct MainView: View {
                     placement: .navigationBarDrawer,
                     prompt: "Search"
                 )
+                .searchSuggestions {
+                    SearchView(store: store)
+                }
         }
+        
     }
     @ViewBuilder
     private var weatherView: some View {
         ScrollView {
-            if store.isSearching {
-                SearchView(store: store)
+            if store.isLoading {
+                ProgressView()
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+                    
             }
             else {
                 currentWeatherView
@@ -40,7 +46,6 @@ struct MainView: View {
         }
         .padding()
         .background(ProjectColor.mainColor)
-        .toolbarBackground(ProjectColor.mainColor, for: .navigationBar)
         .onAppear {
             store.send(.fetchSearchList)
             // fetchWeather
@@ -155,19 +160,12 @@ struct MainView: View {
     @ViewBuilder
     private var mapView: some View {
         VStack(alignment: .leading) {
-            let region = CLLocationCoordinate2D(
-                latitude: store.mapViewInfo.lat ?? 0.0,
-                longitude: store.mapViewInfo.lon ?? 0.0
-            )
             Text("MapView")
                 .foregroundStyle(.white)
+            Map {
+                Marker(store.mapViewInfo.name ?? "", coordinate: CLLocationCoordinate2D(latitude: store.mapViewInfo.lat ?? 0, longitude: store.mapViewInfo.lon ?? 0))
+            }
             
-            Map(initialPosition: .region(
-                .init(center: region,
-                      span: .init(latitudeDelta: 0.005, longitudeDelta: 0.005)
-                ))) {
-                    Marker(store.mapViewInfo.name ?? "", coordinate: region)
-                }
         }
         .padding()
         .frame(maxWidth: .infinity, minHeight: 300)

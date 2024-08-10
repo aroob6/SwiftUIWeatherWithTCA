@@ -170,8 +170,8 @@
 		9AA176252C626DB7005747ED /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				9AA1762F2C6362C8005747ED /* ProjectColor.swift */,
 				9AA1765F2C65FD90005747ED /* citylist.json */,
+				9AA1762F2C6362C8005747ED /* ProjectColor.swift */,
 				9AA176262C626DC7005747ED /* EntityResponseProtocol.swift */,
 			);
 			path = Support;
